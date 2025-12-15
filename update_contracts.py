@@ -51,16 +51,7 @@ def get_supabase_client() -> Client:
         logger.error("Supabase credentials not found in environment variables")
         raise ValueError("Missing SUPABASE_URL or SUPABASE_SERVICE_ROLE_KEY")
     
-    try:
-        # Create client with explicit parameters only
-        return create_client(
-            supabase_url=url,
-            supabase_key=service_key
-        )
-    except TypeError as e:
-        # Fallback for older versions
-        logger.warning(f"TypeError creating client, trying fallback: {e}")
-        return create_client(url, service_key)
+    return create_client(url, service_key)
 
 def get_current_contract_names(reference_date: datetime | None = None):
     if reference_date is None:
