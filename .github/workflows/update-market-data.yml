@@ -25,14 +25,6 @@ jobs:
       - name: Install dependencies
         run: |
           pip install --upgrade --force-reinstall --no-cache-dir -r requirements.txt
-
-      - name: Debug installed versions
-        run: |
-          python - <<EOF
-          import supabase, httpx
-          print("supabase:", supabase.__version__)
-          print("httpx:", httpx.__version__)
-          EOF
           
       - name: Update exchange rate
         env:
