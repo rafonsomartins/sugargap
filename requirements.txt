@@ -1,5 +1,6 @@
 requests==2.31.0
-supabase-py==1.0.3
+supabase==2.4.3
+httpx==0.27.2
 python-dotenv==1.0.0
 pandas==2.1.4
 numpy==1.24.3
