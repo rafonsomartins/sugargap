@@ -86,7 +86,7 @@ python update_contracts.py
 ### GitHub Actions (Automated)
 
 The scripts run automatically via GitHub Actions:
-- **Exchange Rate**: Every 30 minutes
+- **Exchange Rate**: Every hour
 - **Contracts**: Daily at 18:30 UTC
 
 #### Setting up GitHub Secrets
