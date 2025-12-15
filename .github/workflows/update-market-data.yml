@@ -1,0 +1,65 @@
+name: Update Market Data
+
+on:
+  schedule:
+    # Update exchange rate every hour
+    - cron: '0 * * * *'
+    # Update contracts daily at 18:30 UTC
+    - cron: '30 18 * * *'
+  workflow_dispatch: # Allows manual trigger
+
+jobs:
+  update-exchange-rate:
+    runs-on: ubuntu-latest
+    # Run every hour
+    if: github.event.schedule == '0 * * * *' || github.event_name == 'workflow_dispatch'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          
+      - name: Update exchange rate
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          ALPHA_VANTAGE_API_KEY: ${{ secrets.ALPHA_VANTAGE_API_KEY }}
+        run: |
+          python update_exchange_rate.py
+
+  update-contracts:
+    runs-on: ubuntu-latest
+    # Run daily at 18:30 UTC
+    if: github.event.schedule == '30 18 * * *' || github.event_name == 'workflow_dispatch'
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          
+      - name: Clone bc-utils repository
+        run: |
+          git clone https://github.com/bug-or-feature/bc-utils.git
+          
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          
+      - name: Update contracts
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          BARCHART_USERNAME: ${{ secrets.BARCHART_USERNAME }}
+          BARCHART_PASSWORD: ${{ secrets.BARCHART_PASSWORD }}
+        run: |
+          python update_contracts.py

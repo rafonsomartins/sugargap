@@ -1,0 +1,12 @@
+# Environment variables
+.env
+
+# Test files
+test_*.py
+*_test.py
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so

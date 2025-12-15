@@ -1,0 +1,3 @@
+[submodule "bc-utils"]
+	path = bc-utils
+	url = https://github.com/bug-or-feature/bc-utils.git
