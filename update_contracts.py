@@ -91,7 +91,7 @@ def fetch_contract_price(session, contract_symbol):
     try:
         logger.info(f"Fetching price for {contract_symbol}")
 
-        df = get_historical_prices_for_contract(session, contract_symbol, Resolution.Minute)
+        df = get_historical_prices_for_contract(session, contract_symbol, Resolution.Hour)
         
         if df is None or df.empty:
             logger.warning(f"No data available for {contract_symbol}")
