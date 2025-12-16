@@ -4,8 +4,8 @@ on:
   schedule:
     # Update exchange rate every hour
     - cron: '0 * * * *'
-    # Update contracts daily at 18:30 UTC
-    - cron: '30 18 * * *'
+    # Update contracts every 2 hours between 8:00 and 18:00 UTC
+    - cron: '0 8,10,12,14,16,18 * * *'
   workflow_dispatch: # Allows manual trigger
 
 jobs:
@@ -36,8 +36,8 @@ jobs:
 
   update-contracts:
     runs-on: ubuntu-latest
-    # Run daily at 18:30 UTC
-    if: github.event.schedule == '30 18 * * *' || github.event_name == 'workflow_dispatch'
+    # Run every 2 hours between 8:00 and 18:00 UTC
+    if: github.event.schedule == '0 8,10,12,14,16,18 * * *' || github.event_name == 'workflow_dispatch'
     steps:
       - name: Checkout code
         uses: actions/checkout@v4

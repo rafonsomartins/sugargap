@@ -29,7 +29,6 @@ try:
     from bcutils.config import CONTRACT_MAP
 except ImportError as e:
     print(f"❌ Error importing bc-utils: {e}")
-    print("Make sure bc-utils directory exists and is properly installed")
     sys.exit(1)
 
 # Load environment variables
