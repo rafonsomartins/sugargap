@@ -50,6 +50,9 @@ jobs:
       - name: Clone bc-utils repository
         run: |
           git clone https://github.com/bug-or-feature/bc-utils.git
+      - name: Install bc-utils (and its dependencies)
+        run: |
+          pip install -e ./bc-utils
           
       - name: Install dependencies
         run: |
