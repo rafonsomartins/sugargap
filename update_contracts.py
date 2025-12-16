@@ -90,16 +90,16 @@ def fetch_contract_price(session, contract_symbol):
     """Fetch current price for a single contract"""
     try:
         logger.info(f"Fetching price for {contract_symbol}")
-        
-        # Get recent price data (last few days to ensure we get latest closing price)
-        df = get_historical_prices_for_contract(session, contract_symbol, Resolution.Day)
+
+        df = get_historical_prices_for_contract(session, contract_symbol, Resolution.Minute)
         
         if df is None or df.empty:
             logger.warning(f"No data available for {contract_symbol}")
             return None
         
         # Get the most recent close price
-        latest_close = df['Close'].iloc[-1]
+        df = df.sort_index()
+        latest_close = df['Close'].dropna().iloc[-1]
         logger.info(f"{contract_symbol}: ${latest_close:.2f}")
         
         return float(latest_close)
